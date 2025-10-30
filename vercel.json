@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "framework": "nextjs",
+  "functions": {
+    "api/**": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 60,
+      "memory": 1024
+    }
+  },
+  "installCommand": "yarn install --frozen-lockfile",
+  "buildCommand": "next build",
+  "devCommand": "next dev"
+}
