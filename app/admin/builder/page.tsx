@@ -5,15 +5,15 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Menu, X } from 'lucide-react';
 import ComponentPalette from '../components/Builder/ComponentPalette';
 import BuilderCanvas from '../components/Builder/BuilderCanvas';
-import { createComponent, Component, ComponentType } from '../components/Builder/types';
+import { createComponent, Component, ComponentType, COMPONENT_TYPES } from '../components/Builder/types';
 import Link from 'next/link';
 
 export default function BuilderPage() {
   const [components, setComponents] = useState<Component[]>([]);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const handleAddComponent = (type: ComponentType | string, customData?: any) => {
-    if (type === 'custom' && customData) {
+  const handleAddComponent = (type: ComponentType | string, isCustom?: boolean, customData?: any) => {
+    if (isCustom && customData) {
       // Handle custom component
       const newComponent: Component = {
         id: `custom-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -24,9 +24,13 @@ export default function BuilderPage() {
         },
       };
       setComponents([...components, newComponent]);
-    } else if (type in ['text', 'richtext', 'enum']) {
-      const newComponent = createComponent(type as ComponentType);
-      setComponents([...components, newComponent]);
+    } else if (type === COMPONENT_TYPES.TEXT || type === COMPONENT_TYPES.RICHTEXT || type === COMPONENT_TYPES.ENUM) {
+      try {
+        const newComponent = createComponent(type as ComponentType);
+        setComponents([...components, newComponent]);
+      } catch (error) {
+        console.error('Failed to create component:', error);
+      }
     }
   };
 
