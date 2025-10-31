@@ -68,7 +68,7 @@ This repo includes vercel.json configured for Next.js and Node.js 20 serverless 
 3. Set Environment Variables in Vercel Project Settings:
    - MONGO_URL
    - DB_NAME
-   - NEXT_PUBLIC_BASE_URL (e.g., https://your-app.vercel.app)
+   - NEXT_PUBLIC_BASE_URL (e.g., https://agentic-cms.vercel.app)
    - CORS_ORIGINS (e.g., your domains)
 4. Deploy. Vercel will run yarn install and next build per vercel.json.
 
