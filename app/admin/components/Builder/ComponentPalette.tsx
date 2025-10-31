@@ -18,11 +18,11 @@ type LucideIcon = typeof Type;
 const iconMap: Record<string, LucideIcon> = {
   Type,
   FileText,
-  List,
+  List: ListIcon,
   Image, User, Users, Star, Heart, Calendar, 
   Clock, MapPin, Mail, Phone, Link, Camera, Video, Music,
   Book, Bookmark, Tag, Folder, File, Archive, Package, Box, Grid,
-  AlignLeft, Hash, List: ListIcon, CheckSquare,
+  AlignLeft, Hash, CheckSquare,
 };
 
 interface ComponentPaletteProps {
