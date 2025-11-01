@@ -11,7 +11,18 @@ import { DayPicker, getDefaultClassNames } from "react-day-picker";
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
 
-function Calendar<HTMLDivElement>({
+interface CalendarProps {
+  className?: string;
+  classNames?: any;
+  showOutsideDays?: boolean;
+  captionLayout?: "label" | "dropdown";
+  buttonVariant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+  formatters?: any;
+  components?: any;
+  [key: string]: any;
+}
+
+function Calendar({
   className,
   classNames,
   showOutsideDays = true,
@@ -20,7 +31,7 @@ function Calendar<HTMLDivElement>({
   formatters,
   components,
   ...props
-}) {
+}: CalendarProps) {
   const defaultClassNames = getDefaultClassNames()
 
   return (
@@ -135,15 +146,22 @@ function Calendar<HTMLDivElement>({
   );
 }
 
-function CalendarDayButton<HTMLDivElement>({
+interface CalendarDayButtonProps {
+  className?: string;
+  day: any;
+  modifiers: any;
+  [key: string]: any;
+}
+
+function CalendarDayButton({
   className,
   day,
   modifiers,
   ...props
-}) {
+}: CalendarDayButtonProps) {
   const defaultClassNames = getDefaultClassNames()
 
-  const ref = React.useRef(null)
+  const ref = React.useRef<HTMLButtonElement>(null)
   React.useEffect(() => {
     if (modifiers.focused) ref.current?.focus()
   }, [modifiers.focused])
