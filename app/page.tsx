@@ -64,7 +64,7 @@ export default function AdminDashboard() {
     { icon: LayoutDashboard, label: 'Dashboard', active: true, href: '/' },
     { icon: Layers, label: 'Builder', href: '/admin/builder' },
     { icon: FileText, label: 'Content', badge: '34' },
-    { icon: ImageIcon, label: 'Media', badge: '1.3k' },
+    { icon: ImageIcon, label: 'Media', badge: '1.3k', href: '/media-manager' },
     { icon: Users, label: 'Team' },
     { icon: Settings, label: 'Settings' },
   ];
