@@ -19,6 +19,9 @@ async function connectToMongo(): Promise<Db> {
     }
     db = client.db(process.env.DB_NAME)
   }
+  if (!db) {
+    throw new Error('Database connection failed');
+  }
   return db
 }
 

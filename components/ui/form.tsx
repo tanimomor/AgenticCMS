@@ -1,19 +1,21 @@
 "use client";
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
-import { Controller, FormProvider, useFormContext } from "react-hook-form";
+import { Controller, ControllerProps, FormProvider, useFormContext, FieldValues } from "react-hook-form";
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 
 const Form = FormProvider
 
-const FormFieldContext = React.createContext({})
+interface FormFieldContextValue {
+  name: string;
+}
 
-const FormField = (
-  {
-    ...props
-  }
+const FormFieldContext = React.createContext<FormFieldContextValue | null>(null)
+
+const FormField = <TFieldValues extends FieldValues = FieldValues>(
+  props: ControllerProps<TFieldValues>
 ) => {
   return (
     <FormFieldContext.Provider value={{ name: props.name }}>
@@ -27,11 +29,15 @@ const useFormField = () => {
   const itemContext = React.useContext(FormItemContext)
   const { getFieldState, formState } = useFormContext()
 
-  const fieldState = getFieldState(fieldContext.name, formState)
-
   if (!fieldContext) {
     throw new Error("useFormField should be used within <FormField>")
   }
+
+  if (!itemContext) {
+    throw new Error("useFormField should be used within <FormItem>")
+  }
+
+  const fieldState = getFieldState(fieldContext.name, formState)
 
   const { id } = itemContext
 
@@ -45,7 +51,11 @@ const useFormField = () => {
   }
 }
 
-const FormItemContext = React.createContext({})
+interface FormItemContextValue {
+  id: string;
+}
+
+const FormItemContext = React.createContext<FormItemContextValue | null>(null)
 
 const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => {
   const id = React.useId()
@@ -58,7 +68,10 @@ const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 })
 FormItem.displayName = "FormItem"
 
-const FormLabel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => {
+const FormLabel = React.forwardRef<
+  React.ElementRef<typeof Label>,
+  React.ComponentPropsWithoutRef<typeof Label>
+>(({ className, ...props }, ref) => {
   const { error, formItemId } = useFormField()
 
   return (
@@ -71,7 +84,7 @@ const FormLabel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivE
 })
 FormLabel.displayName = "FormLabel"
 
-const FormControl = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ { ...props }, ref) => {
+const FormControl = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ ...props }, ref) => {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
   return (

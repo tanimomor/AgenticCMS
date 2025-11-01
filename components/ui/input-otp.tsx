@@ -6,7 +6,11 @@ import { Minus } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-const InputOTP = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, containerClassName, ...props }, ref) => (
+type InputOTPProps = React.ComponentPropsWithoutRef<typeof OTPInput> & {
+  containerClassName?: string;
+}
+
+const InputOTP = React.forwardRef<HTMLInputElement, InputOTPProps>(({ className, containerClassName, ...props }, ref) => (
   <OTPInput
     ref={ref}
     containerClassName={cn("flex items-center gap-2 has-[:disabled]:opacity-50", containerClassName)}
@@ -20,7 +24,11 @@ const InputOTPGroup = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTML
 ))
 InputOTPGroup.displayName = "InputOTPGroup"
 
-const InputOTPSlot = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ { index, className, ...props }, ref) => {
+interface InputOTPSlotProps extends React.HTMLAttributes<HTMLDivElement> {
+  index: number;
+}
+
+const InputOTPSlot = React.forwardRef<HTMLDivElement, InputOTPSlotProps>(({ index, className, ...props }, ref) => {
   const inputOTPContext = React.useContext(OTPInputContext)
   const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index]
 
@@ -45,7 +53,7 @@ const InputOTPSlot = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLD
 })
 InputOTPSlot.displayName = "InputOTPSlot"
 
-const InputOTPSeparator = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ { ...props }, ref) => (
+const InputOTPSeparator = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ ...props }, ref) => (
   <div ref={ref} role="separator" {...props}>
     <Minus />
   </div>
