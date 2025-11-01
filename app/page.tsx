@@ -63,10 +63,10 @@ export default function AdminDashboard() {
   const navItems = [
     { icon: LayoutDashboard, label: 'Dashboard', active: true, href: '/' },
     { icon: Layers, label: 'Builder', href: '/admin/builder' },
-    { icon: FileText, label: 'Content', badge: '34' },
+    { icon: FileText, label: 'Content', badge: '34', href: '/content' },
     { icon: ImageIcon, label: 'Media', badge: '1.3k', href: '/media-manager' },
     { icon: Users, label: 'Team' },
-    { icon: Settings, label: 'Settings' },
+    { icon: Settings, label: 'Settings', href: '/settings' },
   ];
 
   const getActivityIcon = (type: ActivityItem['type']): JSX.Element => {
