@@ -27,9 +27,10 @@ const iconMap: Record<string, LucideIcon> = {
 
 interface ComponentPaletteProps {
   onAddComponent: (type: ComponentType | string, isCustom?: boolean, customData?: CustomComponent | null) => void;
+  builderType?: 'document' | 'component';
 }
 
-export default function ComponentPalette({ onAddComponent }: ComponentPaletteProps) {
+export default function ComponentPalette({ onAddComponent, builderType = 'document' }: ComponentPaletteProps) {
   const [customComponents, setCustomComponents] = useState<CustomComponent[]>([]);
 
   useEffect(() => {
@@ -60,7 +61,9 @@ export default function ComponentPalette({ onAddComponent }: ComponentPalettePro
 
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         <div>
-          <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider">Available Components</h3>
+          <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider">
+            {builderType === 'component' ? 'Framework Components' : 'Framework Components'}
+          </h3>
           <div className="space-y-3">
             {COMPONENT_DEFINITIONS.map((component, index) => {
               const Icon = iconMap[component.icon] || Type;
@@ -97,12 +100,12 @@ export default function ComponentPalette({ onAddComponent }: ComponentPalettePro
           </div>
         </div>
 
-        {/* Custom Components Section */}
-        {customComponents.length > 0 && (
+        {/* Custom Components Section - Only show in document builder */}
+        {builderType === 'document' && customComponents.length > 0 && (
           <div className="mt-6">
             <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary" />
-              Your Custom Components
+              Hybrid Components
             </h3>
             <div className="space-y-3">
               {customComponents.map((component, index) => {

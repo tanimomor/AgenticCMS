@@ -13,6 +13,9 @@ export interface ComponentData {
   placeholder?: string;
   value: string;
   options?: string[];
+  // For custom components - store field values as key-value pairs
+  fieldValues?: Record<string, string | string[] | boolean>;
+  customComponentId?: string; // Reference to the custom component definition
 }
 
 export interface Component {

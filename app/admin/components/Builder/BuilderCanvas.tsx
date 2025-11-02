@@ -25,9 +25,10 @@ interface BuilderCanvasProps {
   onUpdateComponents: (components: Component[]) => void;
   onDeleteComponent: (id: string) => void;
   onUpdateComponent: (id: string, newData: Component['data']) => void;
+  builderType?: 'document' | 'component';
 }
 
-export default function BuilderCanvas({ components, onUpdateComponents, onDeleteComponent, onUpdateComponent }: BuilderCanvasProps) {
+export default function BuilderCanvas({ components, onUpdateComponents, onDeleteComponent, onUpdateComponent, builderType = 'document' }: BuilderCanvasProps) {
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -57,8 +58,14 @@ export default function BuilderCanvas({ components, onUpdateComponents, onDelete
       <div className="glass-panel border-b px-8 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-display font-bold">Document Builder</h1>
-            <p className="text-sm text-muted-foreground">Compose your document visually with components</p>
+            <h1 className="text-2xl font-display font-bold">
+              {builderType === 'component' ? 'Component Builder' : 'Document Builder'}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {builderType === 'component' 
+                ? 'Create hybrid components from framework components' 
+                : 'Compose your document visually with components'}
+            </p>
           </div>
           <div className="flex items-center gap-3">
             <motion.button
@@ -84,7 +91,7 @@ export default function BuilderCanvas({ components, onUpdateComponents, onDelete
               className="px-4 py-2 bg-gradient-accent text-primary-foreground rounded-lg font-medium flex items-center gap-2 glow-effect"
             >
               <Save className="w-4 h-4" />
-              Save Document
+              {builderType === 'component' ? 'Save Component' : 'Save Document'}
             </motion.button>
           </div>
         </div>
@@ -106,8 +113,9 @@ export default function BuilderCanvas({ components, onUpdateComponents, onDelete
                   </div>
                   <h3 className="text-2xl font-display font-semibold mb-3">Start Building</h3>
                   <p className="text-muted-foreground mb-6">
-                    Add components from the palette to start composing your document.
-                    Drag and drop to reorder, click to edit properties.
+                    {builderType === 'component'
+                      ? 'Add framework components from the palette to create your hybrid component. Drag and drop to reorder, click to edit properties.'
+                      : 'Add components from the palette to start composing your document. Drag and drop to reorder, click to edit properties.'}
                   </p>
                   <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                     <Code className="w-4 h-4" />
